@@ -1,42 +1,26 @@
 source('find-cFP-Folder.r')
+library(gplots)
+
 read.dir<-	paste0(base.dir,'Data used for figures (pulled by R)/')
 d.WW	<-	read.csv(paste0(read.dir,'CHX whole well processing.csv'))
 
 
-s		<-	1.075
-
+s		<-	1.075	#Scaling factor to start at 100
 mean.DMSO	<-	numeric()
 for (i in 0:10)	mean.DMSO <- append(mean.DMSO,mean(subset(d.WW,Time.day==i)$Count))	
 				
 perc	<-	numeric()
+err		<-	numeric()
 for (i in 0:10)
 {
-	d.CHX	<-	subset(d.WW,CHX==500 & Time.day==i)$Count/s
-	perc	<-	append(perc,mean(d.CHX)/mean.DMSO[i+1]*100)
-	
+	x		<-	(subset(d.WW,CHX==500 & Time.day==i)$Count/s)/mean.DMSO[i+1]*100
+	d.CHX	<-	mean(x)
+	perc	<-	append(perc,d.CHX)
+	err		<-	append(err,sd(x)/sqrt(length(x)))	#This should be corrected if used; smaller error for smaller values is not right.
 }
 
 dev.new(width=3,height=4)
-plot(perc, xlab='Time in drug (d)', ylab='%Control',type='o',ylim=c(0,110))
-
-
-
-
-
-
-aggregate(dcga$l2, by=list(dcga$Expt,dcga$Well,dcga$Colony,dcga$Condition,dcga$Cell.line),
-                    FUN=function(x)
-                    {
-                        if(length(x) < 5) { 			# DMSO is only 0-3 days
-                            time <- 1:4
-                        #} else if (length(x) < 8) { 	# T790M is only 6 days
-                        #    time <- 4:7
-						#} else if (length(x) < 9) { 	# H1650 is only 7 days
-                        #    time <- 4:8
-                        } else if (length(x) > 11) {	# pretreatment data (-3:-1)
-                        	time <- 7:14
-                        } else { 						# Erlotinib otherwise is 10 days
-                            time <- 4:length(x)
-                        }
-                        coef(lm(x[time] ~ time))[2]
-                    })
+#pdf(file=paste0(write.dir,'Fig 4 per-control CHX.pdf'),width=3,height=4)
+par(font.lab=2)
+plot(perc, xlab='Time in drug (d)', ylab='%Control',type='o',ylim=c(0,110),main='PC9 CHX500')
+#dev.off()
