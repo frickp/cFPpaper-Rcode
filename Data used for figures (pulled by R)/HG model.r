@@ -55,16 +55,16 @@ abline(h=0, col='darkgray', lty=2, lwd=2)
 # plotting function for histograms used in HG model
 ########################################################################################
 plot.HG.hist	<-	function(d,x.limit=c(-0.05,0.05),y.limit=c(0,150),skewness=T,line.col='black',hist.col,line.type=1,line.width=2,
-						new.plot=F,show.hist=T,my.title=NA,my.border='black')
+						new.plot=F,show.hist=T,my.title=NA,my.border='black',my.bin=0.0025)
 {
 	if(new.plot==T)	
 	{
-		plot(seq(x.limit[1],x.limit[2],0.0025),seq(x.limit[1],x.limit[2],0.0025),
+		plot(seq(x.limit[1],x.limit[2],my.bin),seq(x.limit[1],x.limit[2],my.bin),
 		xlim=x.limit,ylim=y.limit,type='n',xlab='DIP rate',ylab='Density',main=my.title)
 		}
 	if(show.hist==T)	
 	{
-		hist(d,freq=F,breaks=seq(x.limit[1],x.limit[2],0.0025),ylim=y.limit,
+		hist(d,freq=F,breaks=seq(x.limit[1],x.limit[2],my.bin),ylim=y.limit,
 		col=hist.col,border=ifelse(show.hist==T,my.border,alpha(my.border,0)),add=T)
 	}
 	d.xi	<-	coef(selm(d~1),"DP")['xi']
@@ -73,7 +73,7 @@ plot.HG.hist	<-	function(d,x.limit=c(-0.05,0.05),y.limit=c(0,150),skewness=T,lin
 	if(skewness==TRUE){
 		curve(dsn(x,d.xi,d.omega,d.alpha), xlim=x.limit,ylim=y.limit,col=line.col, 
 			lwd=line.width, lty=line.type,add=T,xlab='DIP rate',ylab='',
-			from=range(d)[1]-0.005, to=range(d)[2]+0.005)
+			from=range(d)[1]-my.bin*2, to=range(d)[2]+my.bin*2)
 			cat(my.title, "p= ", ks.test(d, 'psn', d.xi,d.omega,d.alpha)$p.value,'\n')			
 	}	
 	else{

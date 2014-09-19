@@ -1,9 +1,5 @@
-
-basefile	<-	'~/Dropbox/Shared Vito/cfp paper/Figures/'
-read.dir	<-	paste(basefile,'Data used for figures (pulled by R)',sep='')
+source('find-cFP-Folder.r')
 setwd(read.dir)
-write.dir	<-	paste(basefile,'Figure parts')
-
 
 source('Load cfp data.R')
 source('HG model.R')
@@ -42,41 +38,25 @@ D.An0.1.cfp	<-	subset(cfp.rates, grepl('_D_',ID) & grepl('An0.1_',ID))$rates
 # fits with data hidden
 ##########################################################################################
 
-dev.new(width=3,height=4)
-#fn1	<-	paste(write.dir,'Fig 5 p38 pred and valdn.pdf',sep='/')
-#pdf(file=fn.p38,width=6,height=4)
-#par(font.lab=2,mfrow=c(1,2))
+fn1	<-	paste0(write.dir,'Fig 5 cFP dilutions.pdf')
+dev.new(width=10,height=3)
+#pdf(file=fn1,width=10,height=3)
+par(font.lab=2,mfrow=c(1,4))
 compare.hist(ref='D',combo=c('CHX500','CHX50','CHX5'),my.cols=c('green','red','blue'),
 	my.title='CHX',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
 
-dev.new(width=3,height=4)
-#fn1	<-	paste(write.dir,'Fig 5 p38 pred and valdn.pdf',sep='/')
-#pdf(file=fn.p38,width=6,height=4)
-#par(font.lab=2,mfrow=c(1,2))
-compare.hist(ref='D',combo=c('FSK10','FSK1','FSK0.1'),my.cols=c('green','red','blue'),
-	my.title='FSK',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
-
-dev.new(width=3,height=4)
-#fn1	<-	paste(write.dir,'Fig 5 p38 pred and valdn.pdf',sep='/')
-#pdf(file=fn.p38,width=6,height=4)
-#par(font.lab=2,mfrow=c(1,2))
 compare.hist(ref='D',combo=c('TRM500','TRM50','TRM5'),my.cols=c('green','red','blue'),
 	my.title='TRM',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
 
-dev.new(width=3,height=4)
-#fn1	<-	paste(write.dir,'Fig 5 p38 pred and valdn.pdf',sep='/')
-#pdf(file=fn.p38,width=6,height=4)
-#par(font.lab=2,mfrow=c(1,2))
 compare.hist(ref='D',combo=c('SB10','SB1','SB0.1'),my.cols=c('green','red','blue'),
 	my.title='SB',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
 
-dev.new(width=3,height=4)
-#fn1	<-	paste(write.dir,'Fig 5 p38 pred and valdn.pdf',sep='/')
-#pdf(file=fn.p38,width=6,height=4)
-#par(font.lab=2,mfrow=c(1,2))
 compare.hist(ref='D',combo=c('An1','An0.1'),my.cols=c('green','red'),
 	my.title='An',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
+#dev.off()
 
+#compare.hist(ref='D',combo=c('FSK10','FSK1','FSK0.1'),my.cols=c('green','red','blue'),
+#	my.title='FSK',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
 
 
 ##########################################################################################
@@ -110,28 +90,13 @@ plot.diln	<-	function(d,my.col,my.ylim=c(0,140),my.linecol)
 		}
 }
 
-
-dev.new(width=9,height=4)
-par(mfrow=c(1,4))
+fn2	<-	paste0(write.dir,'Fig 5 cFP diln CHX and fits.pdf')
+dev.new(width=10,height=3)
+#pdf(file=fn2,width=10,height=3)
+par(font.lab=2,mfrow=c(1,4))
 plot.diln(d=append(CHX,'D.cfp'),my.col=c(rep('grey',3),'white'),my.linecol=c('green','red','blue','black'))
+#dev.off()
 
-
-###	This is obsolete now...
-dev.new(width=9,height=4)
-par(mfrow=c(1,3))
-plot.diln(D.cfp,TRM,c('white','grey'))
-
-dev.new(width=9,height=4)
-par(mfrow=c(1,3))
-plot.diln(D.cfp,FSK,c('white','grey'))
-
-dev.new(width=9,height=4)
-par(mfrow=c(1,3))
-plot.diln(D.cfp,CHX,c('white','grey'))
-
-
-dev.new(width=9,height=4)
-par(mfrow=c(1,3))
-plot.diln(D.cfp,SB,c('white','grey'))
-
-
+dev.new(width=10,height=3)
+par(mfrow=c(1,4))
+plot.diln(d=append(SB,'D.cfp'),my.col=c(rep('grey',3),'white'),my.linecol=c('green','red','blue','black'))

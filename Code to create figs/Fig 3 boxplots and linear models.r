@@ -1,10 +1,4 @@
-basefile	<-	'~/Dropbox/Shared Vito/cFP paper/Figures/'
-#Code to automatically add PC compatibility
-basefile2	<-	gsub('\\\\','/',path.expand(basefile))
-xx			<-	try(setwd(basefile2))
-if(class(xx)=="try-error"){basefile2 <- paste('C:/Users/Peter',substring(basefile,2),sep="")}
-read.dir 	<- paste(basefile2,"Data used for figures (pulled by R)",sep="")
-write.dir	<- paste(basefile2,"Figure parts",sep="")
+source('find-cFP-Folder.r')
 setwd(read.dir)
 
 ##################################################################
@@ -13,6 +7,8 @@ setwd(read.dir)
 
 source('cFP norm (72h).R')
 source('cFP combo estimate-slopes.r')
+source('HG model.r')
+library(sn)		#skew-normal for histogram fits
 library(scales) #for alpha blending
 library(gplots) #for error bars: plotCI
 
@@ -142,7 +138,19 @@ segments(3-r,0,10-r,7*lm.down,col='green',lwd=2)
 segments(3-r,0,6-r, 3*lm.DMSO,col='black',lty=2,lwd=2)
 #dev.off()
 
+dev.new(width=4,height=2.5)
+fn.hist1	<-	paste(write.dir,"/Fig 3 side hist (CHX).pdf",sep="")
+#pdf(fn.hist1,width=4, height=2.5)
+plot.HG.hist(d=-DCHX.slope$Slope,new.plot=T,x.limit=c(-0.3,0.15),
+	hist.col=alpha('black',0.3),y.limit=c(0,10),my.bin=0.015)
+#dev.off()
 
+dev.new(width=4,height=4)
+fn.hist2	<-	paste(write.dir,"/Fig 3 hist (DMSO).pdf",sep="")
+#pdf(fn.hist2,width=4, height=4)
+plot.HG.hist(d=D.slope$Slope,new.plot=T,x.limit=c(0.35,1.25),
+	hist.col=alpha('black',0.3),y.limit=c(0,6),my.bin=0.03)
+#dev.off()
 
 ##################################################################
 #Code to plot the linear model fit r-squared values for CHX-treated colonies: Supplementary Figure

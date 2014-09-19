@@ -5,7 +5,7 @@ read.dir<-	paste0(base.dir,'Data used for figures (pulled by R)/')
 d.WW	<-	read.csv(paste0(read.dir,'CHX whole well processing.csv'))
 
 
-s		<-	1.075	#Scaling factor to start at 100
+s		<-	1.075	#Scaling factor to start at 100%
 mean.DMSO	<-	numeric()
 for (i in 0:10)	mean.DMSO <- append(mean.DMSO,mean(subset(d.WW,Time.day==i)$Count))	
 				
