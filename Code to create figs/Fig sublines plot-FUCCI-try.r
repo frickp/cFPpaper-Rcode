@@ -1,16 +1,16 @@
+source('find-cFP-Folder.r')
+setwd(read.dir)
 
-###For processing of day3-6 subline erlotinib data
-setwd('C:/Documents and Settings/BD/My Documents/Dropbox/lab/R-code/BD Population level data');
-#setwd('C:/Users/Peter/Dropbox/Lab/R-code/BD Population level data'); for use on laptop 
-#PC9.DS <- read.csv('Summary PC9 DS 3-6day erlotinib.csv');
+library(gplots)
+library(scales)
+
 PC9.3day <- read.csv('PC9 sublines full 72hour data_b.csv',row.names=NULL);
-head(PC9.3day);
-###creates a new column with the log2 data
-PC9.3day$log2 <- log2(PC9.3day$Cell.count);
-#PC9.3day$ID <- paste(paste(PC9.DS$Subline,PC9.DS$Expt,sep="_"),PC9.DS$Well,sep="_")
+PC9.3day$log2 <- log2(PC9.3day$Cell.count)		#creates a new column with the log2 data
+
 ###Creates unique ID for each well
 PC9.3day$ID <- paste(paste(paste(PC9.3day$Subline,PC9.3day$Expt,sep="_"),
-			PC9.3day$Well,sep="_"),PC9.3day$Condition,sep="_")									
+			PC9.3day$Well,sep="_"),PC9.3day$Condition,sep="_")			
+									
 ###Compiles list of all unique events
 well	<-	as.character(unique(PC9.3day$Well))
 expt	<-	as.character(unique(PC9.3day$Expt))
@@ -89,108 +89,40 @@ for (i in 0:71)
 	DSF$DS5.SE[i+1]	<-	sd(DS5)/sqrt(length(DS5))
 }
 
-dev.new(width=3,height=4)
+fn	=	paste0(write.dir,'Fig 5 Sublines DMSO per-FUCCI.pdf')
+dev.new(width=5,height=4)
+#pdf(file=fn,width=5,height=4)
+par(mfrow=c(1,2),font.lab=2)
+
 plotCI(
 x=	DSF$Time.h,
 y=	DSF$DS3.mean,
-#uiw=DSF$DS3.SE,
-ylim=c(0,70)
+uiw=DSF$DS3.SE,
+#uiw=DSF$DS3.95,
+ylim=c(0,70),
+ylab= 'Percent S/G2/M',
+xlab= 'Time (h)',
+main='DS3 DMSO',
+col=alpha('black',0.35),
+gap=0,
+sfrac=0.001,
+pch=26
 )
+lines(x=	DSF$Time.h,y=	DSF$DS3.mean,lwd=2)
 
-dev.new(width=3,height=4)
 plotCI(
 x=	DSF$Time.h,
 y=	DSF$DS5.mean,
-#uiw=DSF$DS5.SE,
-ylim=c(0,70)
+uiw=DSF$DS5.SE,
+#uiw=DSF$DS5.95,
+ylim=c(0,70),
+ylab= 'Percent S/G2/M',
+xlab= 'Time (h)',
+main='DS5 DMSO',
+col=alpha('black',0.35),
+gap=0,
+sfrac=0.001,
+pch=26
 )
-
-###	Copy and paste code to run plot.72
-#multiple sublines example: plot.72(c("DS1.E","BR1.E"),c("norm"),c(0,3),"SE")
-#multiple data types example: plot.72("sp.D",c("norm","norm.FUCCI"),c(0,3),"SE")
-
-plot.72	<- function(sublines,data.type,yl,err,color)
-{
-len	<-	length(sublines)
-#dev.new()
-par(font.lab=2)
-for (i in 1:len)
-{
-	curr.ds	<-	eval(parse(text=sprintf(paste(sublines[i], "Corr", sep = "."))))
-	#con	<-	ifelse(grepl(".E",sublines[i]),"Erlotinib","DMSO")
-	pop1	<-	numeric()
-	error1	<-	numeric()
-	if (length(data.type)>1)
-	{pop2	<-	numeric()
-	error2	<-	numeric()}
-	for (j in 0:71)
-	{	r1	<- eval(parse(text=paste("curr.ds$",data.type[1],"[curr.ds$Time_h==","j]",sep="")))
-		r1	<-	r1[!is.na(r1)]
-		if(length(data.type)>1)
-			{r2 <- eval(parse(text=paste("curr.ds$",data.type[2],"[curr.ds$Time_h==","j]",sep="")))
-			r2	<-	r2[!is.na(r2)]
-			pop2	<-	append(pop2,mean(r2))
-			error2	<-	append(error2,ifelse(err=="SE",
-						sd(r2)/sqrt(length(r2)),
-						(t.test(r2)[[5]][[1]]-t.test(r2)[[4]][[1]])/2))
-			}
-		pop1	<-	append(pop1,mean(r1))
-		error1	<-	append(error1,ifelse(err=="SE",
-						sd(r1)/sqrt(length(r1)),
-						(t.test(r1)[[5]][[1]]-t.test(r1)[[4]][[1]])/2))
-		
-	}
-	plotCI(
-	x	=	c(0:71),
-	y	=	pop1,
-	uiw	=	error1,
-	add	=	ifelse(i==1,FALSE,TRUE),
-	ylim	=	yl,
-	gap=0,
-	ylab="doublings",
-	main=ifelse(length(data.type)>1,sublines[i],paste(substring(sublines[i],1,3),data.type))
-	#,col="red"
-	,col=color[1]
-	)
-	ifelse(length(data.type)>1,
-	plotCI(
-	x	=	c(0:71),
-	y	=	pop2,
-	uiw	=	error2,
-	add	=	TRUE,
-	ylim	=	yl,
-	gap=0,
-	ylab="doublings",
-	main=ifelse(length(data.type)>1,sublines[i],paste(substring(sublines[i],1,3),data.type))
-	,col=color[2]
-	),pop2<-numeric()
-	)
-}
-}
-
-ifelse(length(data.type)>1,sublines[i],substring(sublines[i],3)
-
-#Code to plot total cell doublings and FUCCI-only doublings of the same subline and condition per graph
-#Plots a subset of the data, with 95% confidence intervals 
-plot.subl	<-	c("BR1.D","BR1.E","DS1.D","DS1.E","DS3.D","DS3.E","DS4.D","DS4.E","DS7.D","DS7.E")
-dev.new(width=5,height=10)
-par(mfrow=c(5,2),mai=c(0.4,0.7,0.1,0.2))
-for (i in plot.subl){
-	plot.72(i,c("norm","norm.FUCCI"),c(0,3),"S",c("black","dark green"))
-	}
-
-#Code to plot the erlotinib-treated and the DMSO treated data of the same data type (either norm cell number or norm-FUCCI) on each graph
-#Plots a subset of the data, with 95% confidence intervals
-plot.subl	<-	c("BR1","DS1","DS3","DS4","DS7")
-dev.new(width=5,height=10)
-par(mfrow=c(5,2),mai=c(0.4,0.7,0.1,0.2))
-for (i in plot.subl){
-	x	<-	c(paste(i,".D",sep=""),paste(i,".E",sep=""))
-	plot.72(x,c("norm"),c(0,3),"S",c("black","dark green"))
-	plot.72(x,c("norm.FUCCI"),c(0,3),"S",c("black","dark green"))
-	}
-	
-plot.72(c("DS1.D","DS1.E"),c("norm.FUCCI"),c(0,3),"SE")
-###############above code only works for "SE"	
-	
-#multiple sublines example: plot.72(c("DS1.E","BR1.E"),c("norm"),c(0,3),"SE")
+lines(x=	DSF$Time.h,y=	DSF$DS5.mean,lwd=2)
+#dev.off()
