@@ -7,7 +7,7 @@ cfp.data$log2 <- log2(cfp.data$Cell.count)
 
 
 #List of all drugs to be combined with erlotinib
-drugs	<-	c('CHX','FSK','TRM','X17A','SB','An')
+drugs	<-	c('CHX','FSK','TRM','X17A','SB','An','ABT')
 
 #Add either DMSO 'D' or erlotinib 'E' to ID
 cfp.data$ID1	<-	ifelse(cfp.data$Erl!=0,'E','D')
