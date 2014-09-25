@@ -12,8 +12,9 @@ library(sn)		#skew-normal for histogram fits
 library(scales) #for alpha blending
 library(gplots) #for error bars: plotCI
 
-##################################################################
+##########################################################################################
 #Subset the data
+##########################################################################################
 
 E.TR500		<- subset(cfp, Erl == 3 & TRM == 500)
 D.TR500		<- subset(cfp, Erl == 0 & TRM == 500)
@@ -30,9 +31,9 @@ DCHX.slope50	<- subset(slopes,Erl==0 & CHX==50)
 DCHX.slope5		<- subset(slopes,Erl==0 & CHX==5)
 D.slope			<- subset(slopes, Erl == 0 & CHX == 0 & FSK == 0 & TRM == 0 & X17A == 0)
 
-#####################################################################
+##########################################################################################
 #Plot average dynamics in 500 nM CHX versus control: Fig. 3a
-
+##########################################################################################
 ctrl.mean	<-	aggregate(D.ctrl$nl2,by=list(D.ctrl$Time.day),FUN=mean)
 colnames(ctrl.mean)	<-	c("Time.day","nl2")
 CHX.mean	<-	cbind(
@@ -62,8 +63,9 @@ legend("topright",c("Ctrl","Chx"),lty=c(2,1),lwd=c(2,2),bty="n")
 #rect(3,-0.2,10.3,2.2,col=alpha('lightblue',0.5),border=NA)
 #text(x=5,y=0.1,"Linear")
 
-##################################################################
+##########################################################################################
 #Plot traces of individual colonies over colony size boxplots: Fig. 3b
+##########################################################################################
 
 lo	<-	"B04_J_E0_CHX500_TRM0_X17A0_Plate1"
 hi	<-	"B03_A_E0_CHX500_TRM0_X17A0_Plate1"
@@ -77,10 +79,11 @@ boxplot(nl2 ~ Time.day, data=D.CHX500, notch=TRUE, xlab="Time in drug (d)", ylab
 lines(1:11, subset(cfp,id==lo)$nl2[1:11], col='blue', lwd=2)
 lines(1:11, subset(cfp,id==hi)$nl2[1:11], col='red', lwd=2) 
 lines(1:11, subset(cfp,id==down)$nl2[1:11], col='green', lwd=2)
-lines(1:4, mean.ctrl,col='black',lty=2,lwd=2)
+lines(1:4, mean.ctrl$nl2,col='black',lty=2,lwd=2)
 #dev.off()
-##################################################################
+##########################################################################################
 #72h normalization of plot traces of individual colonies over colony size boxplots: Fig. 3d
+##########################################################################################
 
 dev.new(width=3, height=4)
 fn.boxplot	<-	paste(write.dir,"/Fig 3 72h norm colony dynamics boxplots.pdf",sep="")
@@ -101,9 +104,9 @@ lines(1:4, mean.ctrl$nl2,col='black',lty=2,lwd=2)
 
 
 
-##################################################################
-#Code to display estimated data from linear model fits: Fig. 3e
-
+##########################################################################################
+# Code to display estimated data from linear model fits: Fig. 3e
+##########################################################################################
 r	<-	2 #registration error of boxplots		
 dev.new(width=3,height=4)
 fn3	<-	paste(write.dir,"/Fig 3 72h norm linear model colony dynamics.pdf",sep="")
@@ -138,23 +141,9 @@ segments(3-r,0,10-r,7*lm.down,col='green',lwd=2)
 segments(3-r,0,6-r, 3*lm.DMSO,col='black',lty=2,lwd=2)
 #dev.off()
 
-dev.new(width=4,height=2.5)
-fn.hist1	<-	paste(write.dir,"/Fig 3 side hist (CHX).pdf",sep="")
-#pdf(fn.hist1,width=4, height=2.5)
-plot.HG.hist(d=-DCHX.slope$Slope,new.plot=T,x.limit=c(-0.3,0.15),
-	hist.col=alpha('black',0.3),y.limit=c(0,10),my.bin=0.015)
-#dev.off()
-
-
-dev.new(width=4,height=4)
-fn.hist2	<-	paste(write.dir,"/Fig 3 hist (DMSO).pdf",sep="")
-#pdf(fn.hist2,width=4, height=4)
-plot.HG.hist(d=D.slope$Slope,new.plot=T,x.limit=c(0.35,1.25),
-	hist.col=alpha('black',0.3),y.limit=c(0,6),my.bin=0.03)
-#dev.off()
-
-##################################################################
+##########################################################################################
 #Code to plot the linear model fit r-squared values for CHX-treated colonies: Supplementary Figure
+##########################################################################################
 
 dev.new(width=3,height=4)
 fn4	<-	paste(write.dir,"/Fig 4 R2 linear model coefficients.pdf",sep="")
@@ -166,8 +155,9 @@ hist(R2,xlab="R2",main="",breaks=20)
 text(x=0,y=250,paste("n = ",length(R2),sep=""))
 #dev.off()
 
-##################################################################
+##########################################################################################
 #Code to generate a correlation plot of rate and 10-day change in colony size (outcome): Supplementary Figure
+##########################################################################################
 
 ten.day	<-	subset(D.CHX500,Time.day==10)
 pred	<-	cbind(ten.day[,c('id','nl2')],DCHX.slope[,c('id','Slope')],rep(NA,nrow(ten.day)),rep(0,nrow(ten.day)))
@@ -176,7 +166,6 @@ colnames(pred)	<-	c('id.nl2','nl2','id.slope','Slope','new.idnl2','new.nl2')
 for (i in 1:nrow(pred)) #Combine DIP rate and 10d data into one matrix
 {
 	pred[grep(pred[i,1],pred[,3]),c('new.idnl2','new.nl2')] <- pred[i,c('id.nl2','nl2')]
-	#pred[pred[,3] %in% pred[i,1],c('new.rank','new.slope')]	<-	
 }
 
 dev.new(width=3,height=4)
@@ -190,19 +179,29 @@ abline(pred.lm[1],pred.lm[2])
 text(x=.05,y=2.3,paste("R = ",as.numeric(round(cor.test(pred$new.nl2,pred$Slope)$estimate,2))))
 #dev.off()
 
+
+##########################################################################################
+# Plot rate histograms
+##########################################################################################
+
+
 dev.new(width=4,height=2.5)
-fn.hist6	<-	paste(write.dir,"/Fig 3 10d side hist (CHX).pdf",sep="")
-#pdf(fn.hist6,width=4, height=2.5)
-hist(-ten.day$nl2,freq=F,main=NULL,xlim=c(-2.7,0.5),breaks=seq(-2.5,0.5,0.17),col=alpha('black',0.3))
+fn.CHX10d	<-	paste(write.dir,"/Fig 3 10d side hist (CHX 10d).pdf",sep="")
+#pdf(fn.CHX10d,width=4, height=2.5)
+hist(-ten.day$nl2,freq=F,main=NULL,xlim=c(-2.9,0.5),breaks=seq(-2.5,0.5,0.17),col=alpha('black',0.3))
 curve(dnorm(x,mean=mean(-ten.day$nl2),sd=sd(-ten.day$nl2)),add=T,lwd=2)
-
-
+#dev.off()
 
 dev.new(width=4,height=2.5)
-fn.hist1	<-	paste(write.dir,"/Fig 3 side hist (CHX).pdf",sep="")
-#pdf(fn.hist1,width=4, height=2.5)
+fn.CHXest	<-	paste(write.dir,"/Fig 3 side hist (CHX 10d est).pdf",sep="")
+#pdf(fn.CHXest,width=4, height=2.5)
 plot.HG.hist(d=-DCHX.slope$Slope,new.plot=T,x.limit=c(-0.3,0.15),
 	hist.col=alpha('black',0.3),y.limit=c(0,10),my.bin=0.025,skewness=F)
 #dev.off()
 
-ks.test(ten.day$nl2,DCHX.slope$Slope*7)
+dev.new(width=4,height=4)
+fn.hist2	<-	paste(write.dir,"/Fig 3 hist (DMSO).pdf",sep="")
+#pdf(fn.hist2,width=4, height=4)
+plot.HG.hist(d=D.slope$Slope,new.plot=T,x.limit=c(0.35,1.25),
+	hist.col=alpha('black',0.3),y.limit=c(0,6),my.bin=0.03)
+#dev.off()

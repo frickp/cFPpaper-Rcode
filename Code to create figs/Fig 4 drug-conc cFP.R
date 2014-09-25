@@ -77,7 +77,7 @@ legend('topright',c('DMSO','CHX500'),fill=c('white','grey'),cex=0.8,bty='n')
 # Full plots with data included
 ##########################################################################################
 
-plot.diln	<-	function(d,my.col,my.ylim=c(0,140),my.linecol)
+plot.diln	<-	function(d,my.col,my.ylim=c(0,140),my.linecol,skewness=F)
 {
 	for (i in 1:length(d))
 	{
@@ -88,17 +88,29 @@ plot.diln	<-	function(d,my.col,my.ylim=c(0,140),my.linecol)
 		legend('topleft',c('ctrl',
 			paste(d[i],' n=',length(x))),
 			fill=my.col,bty='n',cex=0.9)
-		text(x=-0.035,y=100,paste(expression(mu),	format(coef(selm(x~1))['mean'],scientific=T,digits=2),sep='='))
-		text(x=-0.035,y=92,paste(expression(sigma),	format(coef(selm(x~1))['s.d.'],scientific=T,digits=2),sep='='))
-		text(x=-0.035,y=84,paste(expression(gamma),	format(coef(selm(x~1))[3],scientific=T,digits=2),sep='='))
+		if(skewness==F)
+		{
+			text(x=-0.035,y=100,paste(expression(mu),	format(mean(x),scientific=T,digits=2),sep='='))
+			text(x=-0.035,y=92,paste(expression(sigma),	format(sd(x),scientific=T,digits=2),sep='='))
+			text(x=-0.035,y=60,paste0('K-S p=',format(ks.test(x, 'pnorm', mean(x),sd(x))$p.value,scientific=F,digits=2)))
 		}
+		else {
+			text(x=-0.035,y=100,paste(expression(mu),	format(coef(selm(x~1))['mean'],scientific=T,digits=2),sep='='))
+			text(x=-0.035,y=92,paste(expression(sigma),	format(coef(selm(x~1))['s.d.'],scientific=T,digits=2),sep='='))
+			text(x=-0.035,y=84,paste(expression(gamma),	format(coef(selm(x~1))[3],scientific=T,digits=2),sep='='))
+			x.xi	<-	coef(selm(x~1),"DP")['xi']
+			x.omega	<-	coef(selm(x~1),"DP")['omega']
+			x.alpha	<-	coef(selm(x~1),"DP")['alpha']	
+			text(x=-0.035,y=60,paste0('K-S p=',format(ks.test(x, 'psn', x.xi,x.omega,x.alpha)$p.value,scientific=F,digits=2)))
+		}
+	}
 }
 
 fn2	<-	paste0(write.dir,'Fig 5 cFP diln CHX and fits.pdf')
 dev.new(width=10,height=3)
 #pdf(file=fn2,width=10,height=3)
 par(font.lab=2,mfrow=c(1,4))
-plot.diln(d=append(CHX,'D.cfp'),my.col=c(rep('grey',3),'white'),my.linecol=c('green','red','blue','black'))
+plot.diln(d=append(CHX,'D.cfp'),my.col=c(rep('grey',3),'white'),my.linecol=c('green','red','blue','black'),skewness=F)
 #dev.off()
 
 dev.new(width=10,height=3)
