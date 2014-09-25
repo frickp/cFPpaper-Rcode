@@ -24,7 +24,7 @@ HGM.skew <- function(t, location, scale, shape)
 #new.plot:	either T or F; if curve is being added to existing plot, then use F
 #cols:		color of the curve
 
-plot.HGM	<-	function(data,skewness,x.limits,y.limits,new.plot,cols){
+plot.HGM	<-	function(data,skewness=T,x.limits,y.limits,new.plot=F,cols,my.title=NA){
 d.mu		<-	mean(data)
 d.sigma		<-	ifelse(is.na(sd(data)),0,sd(data))
 if(skewness==T){
@@ -40,7 +40,7 @@ if(new.plot==T){
 if(skewness==T){
 	curve(HGM.skew(x*24,d.xi,d.omega,d.alpha),from=0, to=x.limits[2], lwd=3, 
 		add=TRUE,col=cols)
-	if(new.plot==T)	{title(expression(bold("HG model (skew-normal)")))}	
+	if(new.plot==T)	{title(my.title)}	
 }
 else{
 	curve(	hgm.log(x*24, d.mu, d.sigma)/log(2), 
@@ -74,11 +74,15 @@ plot.HG.hist	<-	function(d,x.limit=c(-0.05,0.05),y.limit=c(0,150),skewness=T,lin
 		curve(dsn(x,d.xi,d.omega,d.alpha), xlim=x.limit,ylim=y.limit,col=line.col, 
 			lwd=line.width, lty=line.type,add=T,xlab='DIP rate',ylab='',
 			from=range(d)[1]-my.bin*2, to=range(d)[2]+my.bin*2)
-			cat(my.title, "p= ", ks.test(d, 'psn', d.xi,d.omega,d.alpha)$p.value,'\n')			
+			cat(my.title, "p= ",
+				ifelse(skewness==T,			
+					ks.test(d, 'psn', d.xi,d.omega,d.alpha)$p.value,
+					ks.test(d, 'pnorm', mead(d),sd(d))$p.value),
+				'\n')			
 	}	
 	else{
 		curve(dnorm(x, mean(d), sd(d)), xlim=x.limit,ylim=y.limit,col=line.col, 
-			lwd=line.width, lty=line.type,add=T,main=name,xlab='DIP rate',ylab='')
+			lwd=line.width, lty=line.type,add=T,main=my.title,xlab='DIP rate',ylab='')
 	}
 }
 
@@ -121,18 +125,19 @@ else{
 #ref is the single-agent data
 #combo is the second agent added to 'ref'
 
-compare.hist	<- function(ref,combo,my.cols,my.title,my.xlim=c(-0.04,0.02),my.ylim=c(0,100))
+compare.hist	<- function(ref,combo,my.cols,plot.title,my.xlim=c(-0.04,0.02),my.ylim=c(0,100),my.skew=T)
 {
-	plot.HG.hist(d=eval(parse(text=paste(ref,'cfp',sep='.'))), new.plot=T,
-		show.hist=F,x.limit=my.xlim,y.limit=my.ylim,line.col='black')
+	cond.names <- paste(ref,append('DMSO',combo),sep='+')
+	plot.HG.hist(d=eval(parse(text=paste(ref,'cfp',sep='.'))), new.plot=T,my.title=cond.names[1],
+		show.hist=F,x.limit=my.xlim,y.limit=my.ylim,line.col='black',skewness=my.skew)
 	for (i in 1:length(combo))
 	{
 		cfp		<- eval(parse(text=paste(ref,combo[i],'cfp',sep='.')))
-		plot.HG.hist(d=cfp,show.hist=F,line.col=my.cols[i])
+		plot.HG.hist(d=cfp,show.hist=F,line.col=my.cols[i],my.title=cond.names[i+1])
 	}
 	abline(v=0,col='burlywood',lty=2,lwd=2)
-	legend('topleft',paste(ref,append('DMSO',combo),sep='+'),fill=append('black',my.cols),bty='n',cex=0.7)
-	title(my.title)
+	legend('topleft',cond.names,fill=append('black',my.cols),bty='n',cex=0.7)
+	title(plot.title)
 }
 
 ########################################################################################

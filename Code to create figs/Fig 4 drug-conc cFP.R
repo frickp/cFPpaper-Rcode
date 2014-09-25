@@ -45,16 +45,16 @@ dev.new(width=10,height=3)
 #pdf(file=fn1,width=10,height=3)
 par(font.lab=2,mfrow=c(1,4))
 compare.hist(ref='D',combo=c('CHX500','CHX50','CHX5'),my.cols=c('green','red','blue'),
-	my.title='CHX',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
+	plot.title='CHX',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=F)
 
 compare.hist(ref='D',combo=c('TRM500','TRM50','TRM5'),my.cols=c('green','red','blue'),
-	my.title='TRM',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
+	plot.title='TRM',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=F)
 
 compare.hist(ref='D',combo=c('SB10','SB1','SB0.1'),my.cols=c('green','red','blue'),
-	my.title='SB',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
+	plot.title='SB',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=F)
 
 compare.hist(ref='D',combo=c('An1','An0.1'),my.cols=c('green','red'),
-	my.title='An',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
+	plot.title='An',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=F)
 #dev.off()
 
 #compare.hist(ref='D',combo=c('FSK10','FSK1','FSK0.1'),my.cols=c('green','red','blue'),
