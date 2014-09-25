@@ -82,7 +82,8 @@ plot.HG.hist	<-	function(d,x.limit=c(-0.05,0.05),y.limit=c(0,150),skewness=T,lin
 	}	
 	else{
 		curve(dnorm(x, mean(d), sd(d)), xlim=x.limit,ylim=y.limit,col=line.col, 
-			lwd=line.width, lty=line.type,add=T,main=my.title,xlab='DIP rate',ylab='')
+			lwd=line.width, lty=line.type,add=T,main=my.title,xlab='DIP rate',ylab='',
+			from=range(d)[1]-my.bin*2, to=range(d)[2]+my.bin*2)
 	}
 }
 
@@ -133,7 +134,7 @@ compare.hist	<- function(ref,combo,my.cols,plot.title,my.xlim=c(-0.04,0.02),my.y
 	for (i in 1:length(combo))
 	{
 		cfp		<- eval(parse(text=paste(ref,combo[i],'cfp',sep='.')))
-		plot.HG.hist(d=cfp,show.hist=F,line.col=my.cols[i],my.title=cond.names[i+1])
+		plot.HG.hist(d=cfp,show.hist=F,line.col=my.cols[i],my.title=cond.names[i+1],skewness=my.skew)
 	}
 	abline(v=0,col='burlywood',lty=2,lwd=2)
 	legend('topleft',cond.names,fill=append('black',my.cols),bty='n',cex=0.7)

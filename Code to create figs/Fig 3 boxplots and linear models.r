@@ -193,8 +193,8 @@ text(x=.05,y=2.3,paste("R = ",as.numeric(round(cor.test(pred$new.nl2,pred$Slope)
 dev.new(width=4,height=2.5)
 fn.hist6	<-	paste(write.dir,"/Fig 3 10d side hist (CHX).pdf",sep="")
 #pdf(fn.hist6,width=4, height=2.5)
-hist(-ten.day$nl2,freq=F,main=NULL,xlim=c(-2.5,0.5),breaks=seq(-2.5,0.5,0.15))
-curve(dnorm(x,mean=mean(-ten.day$nl2),sd=sd(-ten.day$nl2)),add=T)
+hist(-ten.day$nl2,freq=F,main=NULL,xlim=c(-2.7,0.5),breaks=seq(-2.5,0.5,0.17),col=alpha('black',0.3))
+curve(dnorm(x,mean=mean(-ten.day$nl2),sd=sd(-ten.day$nl2)),add=T,lwd=2)
 
 
 
@@ -202,5 +202,7 @@ dev.new(width=4,height=2.5)
 fn.hist1	<-	paste(write.dir,"/Fig 3 side hist (CHX).pdf",sep="")
 #pdf(fn.hist1,width=4, height=2.5)
 plot.HG.hist(d=-DCHX.slope$Slope,new.plot=T,x.limit=c(-0.3,0.15),
-	hist.col=alpha('black',0.3),y.limit=c(0,10),my.bin=0.02)
+	hist.col=alpha('black',0.3),y.limit=c(0,10),my.bin=0.025,skewness=F)
 #dev.off()
+
+ks.test(ten.day$nl2,DCHX.slope$Slope*7)
