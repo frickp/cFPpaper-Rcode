@@ -5,7 +5,8 @@ setwd(read.dir)
 # Pull all data
 ##################################################################
 
-source('Load cfp data.R')
+source('cFP norm (72h).R')
+source('cFP combo estimate-slopes.r')
 source('HG model.r')
 library(sn)		#skew-normal for histogram fits
 library(scales) #for alpha blending
@@ -15,19 +16,13 @@ library(gplots) #for error bars: plotCI
 #Subset the data
 ##########################################################################################
 
-E.TR500		<- subset(cfp, Erl == 3 & TRM == 500)
-D.TR500		<- subset(cfp, Erl == 0 & TRM == 500)
-E.CHX500	<- subset(cfp, Erl == 3 & CHX == 500)
+#Colony dynamics
 D.CHX500	<- subset(cfp, Erl == 0 & CHX == 500)
-D.CHX50		<- subset(cfp, Erl == 0 & CHX == 50)
-D.CHX5		<- subset(cfp, Erl == 0 & CHX == 5)
-D.17A		<- subset(cfp, Erl == 0 & X17A == 0.1)
 D.ctrl		<- subset(cfp, Erl == 0 & CHX == 0 & FSK == 0 & TRM == 0 & X17A == 0)
 IDCHX500	<- unique(D.CHX500$id)
 
+#Colony rates
 DCHX.slope		<- subset(slopes,Erl==0 & CHX==500)
-DCHX.slope50	<- subset(slopes,Erl==0 & CHX==50)
-DCHX.slope5		<- subset(slopes,Erl==0 & CHX==5)
 D.slope			<- subset(slopes, Erl == 0 & CHX == 0 & FSK == 0 & TRM == 0 & X17A == 0)
 
 ##########################################################################################
@@ -78,7 +73,6 @@ boxplot(nl2 ~ Time.day, data=D.CHX500, notch=TRUE, xlab="Time in drug (d)", ylab
 lines(1:11, subset(cfp,id==lo)$nl2[1:11], col='blue', lwd=2)
 lines(1:11, subset(cfp,id==hi)$nl2[1:11], col='red', lwd=2) 
 lines(1:11, subset(cfp,id==down)$nl2[1:11], col='green', lwd=2)
-lines(1:4, mean.ctrl$nl2,col='black',lty=2,lwd=2)
 #dev.off()
 ##########################################################################################
 #72h normalization of plot traces of individual colonies over colony size boxplots: Fig. 3d
@@ -178,11 +172,8 @@ abline(pred.lm[1],pred.lm[2])
 text(x=.05,y=2.3,paste("R = ",as.numeric(round(cor.test(pred$new.nl2,pred$Slope)$estimate,2))))
 #dev.off()
 
-fn5	<-	paste(write.dir,"/Fig 4 outcome correlation.pdf",sep="")
 dev.new(width=3,height=4)
-#pdf(fn5,width=3, height=4)
-par(font.lab=2)
-plot.HG.hist(ten.day$nl2,x.limit=c(-1,3),hist.col='white',new.plot=T,y.limit=c(0,1),my.bin=0.2,my.title='10d nl2 CHX500')
+plot.HG.hist(ten.day$nl2,x.limit=c(-1,3),hist.col='white',new.plot=T,my.bin=0.2,y.limit=c(0,1))
 
 ##########################################################################################
 # Plot rate histograms
