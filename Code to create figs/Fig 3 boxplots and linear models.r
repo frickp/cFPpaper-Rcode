@@ -5,8 +5,7 @@ setwd(read.dir)
 # Pull all data
 ##################################################################
 
-source('cFP norm (72h).R')
-source('cFP combo estimate-slopes.r')
+source('Load cfp data.R')
 source('HG model.r')
 library(sn)		#skew-normal for histogram fits
 library(scales) #for alpha blending
@@ -32,7 +31,7 @@ DCHX.slope5		<- subset(slopes,Erl==0 & CHX==5)
 D.slope			<- subset(slopes, Erl == 0 & CHX == 0 & FSK == 0 & TRM == 0 & X17A == 0)
 
 ##########################################################################################
-#Plot average dynamics in 500 nM CHX versus control: Fig. 3a
+#Plot average dynamics in 500 ng/ml CHX versus control: Fig. 3a
 ##########################################################################################
 ctrl.mean	<-	aggregate(D.ctrl$nl2,by=list(D.ctrl$Time.day),FUN=mean)
 colnames(ctrl.mean)	<-	c("Time.day","nl2")
@@ -179,6 +178,11 @@ abline(pred.lm[1],pred.lm[2])
 text(x=.05,y=2.3,paste("R = ",as.numeric(round(cor.test(pred$new.nl2,pred$Slope)$estimate,2))))
 #dev.off()
 
+fn5	<-	paste(write.dir,"/Fig 4 outcome correlation.pdf",sep="")
+dev.new(width=3,height=4)
+#pdf(fn5,width=3, height=4)
+par(font.lab=2)
+plot.HG.hist(ten.day$nl2,x.limit=c(-1,3),hist.col='white',new.plot=T,y.limit=c(0,1),my.bin=0.2,my.title='10d nl2 CHX500')
 
 ##########################################################################################
 # Plot rate histograms

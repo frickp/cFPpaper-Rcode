@@ -34,6 +34,9 @@ D.An0.1.cfp	<-	subset(cfp.rates, grepl('_D_',ID) & grepl('An0.1_',ID))$rates
 
 D.A375.cfp		<-	subset(cfp.rates,grepl('A375',ID) & grepl('D_only',ID))$rates
 D.A375.ABT.cfp	<-	subset(cfp.rates,grepl('A375',ID) & grepl('ABT1',ID))$rates	
+D.A375.PLX.cfp	<-	subset(cfp.rates,grepl('A375',ID) & grepl('PLX2',ID))$rates
+D.A375.TRM.cfp	<-	subset(cfp.rates,grepl('A375',ID) & grepl('TRM1',ID))$rates	
+
 
 ##########################################################################################
 # Add in drug concentration dilution data
@@ -60,8 +63,20 @@ compare.hist(ref='D',combo=c('An1','An0.1'),my.cols=c('green','red'),
 #compare.hist(ref='D',combo=c('FSK10','FSK1','FSK0.1'),my.cols=c('green','red','blue'),
 #	my.title='FSK',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
 
+
+dev.new(width=8,height=3)
+#pdf(file=fn1,width=10,height=3)
+par(font.lab=2,mfrow=c(1,3))
+
 compare.hist(ref='D.A375',combo=c('ABT'),my.cols='red',
-	my.title='An',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
+	plot.title='An',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
+
+compare.hist(ref='D.A375',combo=c('TRM'),my.cols='red',
+	plot.title='An',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
+
+compare.hist(ref='D.A375',combo=c('PLX'),my.cols='red',
+	plot.title='An',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
+
 
 ##########################################################################################
 # Example plot to demonstrate how the curve fits the data
@@ -110,7 +125,7 @@ fn2	<-	paste0(write.dir,'Fig 5 cFP diln CHX and fits.pdf')
 dev.new(width=10,height=3)
 #pdf(file=fn2,width=10,height=3)
 par(font.lab=2,mfrow=c(1,4))
-plot.diln(d=append(CHX,'D.cfp'),my.col=c(rep('grey',3),'white'),my.linecol=c('green','red','blue','black'),skewness=F)
+plot.diln(d=append(CHX,'D.cfp'),my.col=c(rep('grey',4)),my.linecol=c('green','red','blue','black'),skewness=F)
 #dev.off()
 
 dev.new(width=10,height=3)
