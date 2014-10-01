@@ -173,25 +173,24 @@ text(x=.05,y=2.3,paste("R = ",as.numeric(round(cor.test(pred$new.nl2,pred$Slope)
 #dev.off()
 
 dev.new(width=3,height=4)
-plot.HG.hist(ten.day$nl2,x.limit=c(-1,3),hist.col='white',new.plot=T,my.bin=0.2,y.limit=c(0,1))
-
+fn.10dh	<-	paste(write.dir,"/Fig 3 10d hist 500CHX.pdf",sep="")
+#pdf(fn.10dh,width=3, height=4)
+par(font.lab=2)
+plot.HG.hist(ten.day$nl2,x.limit=c(-1,3),hist.col=alpha('black',0.3),new.plot=T,my.bin=0.26,y.limit=c(0,1))
+#dev.off()
 ##########################################################################################
 # Plot rate histograms
 ##########################################################################################
 
 
-dev.new(width=4,height=2.5)
-fn.CHX10d	<-	paste(write.dir,"/Fig 3 10d side hist (CHX 10d).pdf",sep="")
-#pdf(fn.CHX10d,width=4, height=2.5)
-hist(-ten.day$nl2,freq=F,main=NULL,xlim=c(-2.9,0.5),breaks=seq(-2.5,0.5,0.17),col=alpha('black',0.3))
-curve(dnorm(x,mean=mean(-ten.day$nl2),sd=sd(-ten.day$nl2)),add=T,lwd=2)
-#dev.off()
-
-dev.new(width=4,height=2.5)
-fn.CHXest	<-	paste(write.dir,"/Fig 3 side hist (CHX 10d est).pdf",sep="")
-#pdf(fn.CHXest,width=4, height=2.5)
-plot.HG.hist(d=-DCHX.slope$Slope,new.plot=T,x.limit=c(-0.3,0.15),
+dev.new(width=3,height=4)
+fn.CHXrates	<-	paste(write.dir,"/Fig 3 CHX rates hist.pdf",sep="")
+#pdf(fn.CHXrates,width=3, height=4)
+plot.HG.hist(d=DCHX.slope$Slope,new.plot=T,x.limit=c(-0.15,0.3),
 	hist.col=alpha('black',0.3),y.limit=c(0,10),my.bin=0.025,skewness=F)
+arrows(lm.lo,10,lm.lo,5,length=0.15,lwd=2,col='blue')
+arrows(lm.hi,10,lm.hi,5,length=0.15,lwd=2,col='red')
+arrows(lm.down,10,lm.down,5,length=0.15,lwd=2,col='green')
 #dev.off()
 
 dev.new(width=4,height=4)
