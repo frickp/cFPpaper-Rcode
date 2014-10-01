@@ -78,6 +78,10 @@ plot.HG.hist	<-	function(d,x.limit=c(-0.05,0.05),y.limit=c(0,150),skewness=T,lin
 				ifelse(skewness==T,			
 					ks.test(d, 'psn', d.xi,d.omega,d.alpha)$p.value,
 					ks.test(d, 'pnorm', mead(d),sd(d))$p.value),
+				'n= ',length(d),
+				'mu= ',format(mean(d),scientific=T,digits=2),
+				'sig= ',format(sd(d),scientific=T,digits=2),
+				'alpha= ',format(d.alpha,scientific=T,digits=2),
 				'\n')			
 	}	
 	else{
