@@ -4,6 +4,7 @@ setwd(read.dir)
 source('Load cfp data.R')
 source('HG model.R')
 library(sn)
+library(scales)
 
 #Populate new vectors of DIP rates	
 D.cfp	<-	subset(cfp.rates, grepl('D_only',ID) & grepl('PC9',ID))$rates
@@ -44,20 +45,28 @@ D.A375.TRM.cfp	<-	subset(cfp.rates,grepl('A375',ID) & grepl('TRM1',ID))$rates
 ##########################################################################################
 
 fn1	<-	paste0(write.dir,'Fig 5 cFP dilutions.pdf')
-dev.new(width=10,height=3)
-#pdf(file=fn1,width=10,height=3)
-par(font.lab=2,mfrow=c(1,4))
+dev.new(width=8,height=6)
+#pdf(file=fn1,width=8,height=6)
+par(font.lab=2,mfrow=c(2,3))
 compare.hist(ref='D',combo=c('CHX500','CHX50','CHX5'),my.cols=c('green','red','blue'),
-	plot.title='CHX',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=F)
+	plot.title='CHX',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=T)
 
-compare.hist(ref='D',combo=c('TRM500','TRM50','TRM5'),my.cols=c('green','red','blue'),
-	plot.title='TRM',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=F)
+compare.hist(ref='D.A375',combo=c('ABT'),my.cols='darkcyan',
+	plot.title='ABT',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=T)
 
-compare.hist(ref='D',combo=c('SB10','SB1','SB0.1'),my.cols=c('green','red','blue'),
-	plot.title='SB',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=F)
+compare.hist(ref='D.A375',combo=c('PLX'),my.cols='darkcyan',
+	plot.title='PLX',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=T)
 
-compare.hist(ref='D',combo=c('An1','An0.1'),my.cols=c('green','red'),
-	plot.title='An',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=F)
+#compare.hist(ref='D',combo=c('TRM500','TRM50','TRM5'),my.cols=c('green','red','blue'),
+compare.hist(ref='D',combo=c('TRM500','TRM50','TRM5'),my.cols=c(alpha('red',c(1,0.5,0.25))),
+	plot.title='TRM',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=T)
+
+#compare.hist(ref='D',combo=c('SB10','SB1','SB0.1'),my.cols=c(alpha('red',c(1,0.7,0.4))),
+compare.hist(ref='D',combo=c('SB10','SB1'),my.cols=c(alpha('red',c(1,0.4))),
+	plot.title='SB',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=T)
+
+compare.hist(ref='D',combo=c('An1','An0.1'),my.cols=c(alpha('red',c(1,0.4))),
+	plot.title='An',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=T)
 #dev.off()
 
 #compare.hist(ref='D',combo=c('FSK10','FSK1','FSK0.1'),my.cols=c('green','red','blue'),
@@ -76,7 +85,7 @@ compare.hist(ref='D.A375',combo=c('TRM'),my.cols='red',
 
 compare.hist(ref='D.A375',combo=c('PLX'),my.cols='red',
 	plot.title='An',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
-
+dev.off()
 
 ##########################################################################################
 # Example plot to demonstrate how the curve fits the data

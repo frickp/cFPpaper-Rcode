@@ -1,10 +1,4 @@
-basefile	<-	'~/Dropbox/Lab/cFP paper/Figures/'
-#Code to automatically add PC compatibility
-basefile2	<-	gsub('\\\\','/',path.expand(basefile))
-xx			<-	try(setwd(basefile2))
-if(class(xx)=="try-error"){basefile2 <- paste('C:/Users/Peter',substring(basefile,2),sep="")}
-read.dir 	<- paste(basefile2,"Data used for figures (pulled by R)",sep="")
-write.dir	<- paste(basefile2,"Figure parts",sep="")
+source('find-cFP-Folder.r')
 setwd(read.dir)
 
 PC9.3day <- read.csv('PC9 sublines full 72hour data.csv',row.names=NULL);
@@ -131,3 +125,4 @@ plotCI(
 )
 #dev.off()
 
+t.test(DS.rates$DS3.D[1:9],DS.rates$DS5.D[1:9])

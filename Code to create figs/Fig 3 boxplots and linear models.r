@@ -164,7 +164,7 @@ for (i in 1:nrow(pred)) #Combine DIP rate and 10d data into one matrix
 dev.new(width=3,height=4)
 fn5	<-	paste(write.dir,"/Fig 4 outcome correlation.pdf",sep="")
 #pdf(fn5,width=3, height=4)
-par(cex=1.1)
+par(cex=1.1, font.lab=2)
 plot(pred$Slope,pred$new.nl2,xlab="Prolif rate",ylab="Fold change colony size",
 	xlim=c(-.05,.25),ylim=c(-0.2,2.4))
 pred.lm	<-	coef(lm(pred$new.nl2~pred$Slope))
@@ -187,7 +187,7 @@ dev.new(width=3,height=4)
 fn.CHXrates	<-	paste(write.dir,"/Fig 3 CHX rates hist.pdf",sep="")
 #pdf(fn.CHXrates,width=3, height=4)
 plot.HG.hist(d=DCHX.slope$Slope,new.plot=T,x.limit=c(-0.15,0.3),
-	hist.col=alpha('black',0.3),y.limit=c(0,10),my.bin=0.025,skewness=F)
+	hist.col=alpha('black',0.3),y.limit=c(0,10),my.bin=0.025,skewness=T)
 arrows(lm.lo,10,lm.lo,5,length=0.15,lwd=2,col='blue')
 arrows(lm.hi,10,lm.hi,5,length=0.15,lwd=2,col='red')
 arrows(lm.down,10,lm.down,5,length=0.15,lwd=2,col='green')
