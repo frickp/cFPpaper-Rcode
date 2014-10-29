@@ -134,7 +134,7 @@ fn2	<-	paste0(write.dir,'Fig 5 cFP diln CHX and fits.pdf')
 dev.new(width=10,height=3)
 #pdf(file=fn2,width=10,height=3)
 par(font.lab=2,mfrow=c(1,4))
-plot.diln(d=append(CHX,'D.cfp'),my.col=c(rep('grey',4)),my.linecol=c('green','red','blue','black'),skewness=F)
+plot.diln(d=append(CHX,'D.cfp'),my.col=c(rep(alpha('black',0.15),4)),my.linecol=c('darkgreen','red','blue','black'),skewness=F)
 #dev.off()
 
 dev.new(width=10,height=3)
