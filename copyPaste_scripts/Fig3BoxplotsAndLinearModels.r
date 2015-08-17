@@ -28,13 +28,10 @@ source(textConnection(getURL(paste0(mybaseURL,'cFP-norm72h.r'))))
 source(textConnection(getURL(paste0(mybaseURL,'cFP-comboEstimateSlopes.r'))))
 source(textConnection(getURL(paste0(mybaseURL,'HGmodel.r'))))
 
-read.csv(textConnection(getURL(paste0(mybaseURL,'2013-10-15cFP-ErlChxFskTrm17AAG.csv'))))
-paste0(mybaseURL,'2013-10-15cFP-ErlChxFskTrm17AAG.csv')
-read.csv(textConnection(getURL(paste0(mybaseURL,'BP_SKMEL5.csv'))))
-2013-10-15cFP-ErlChxFskTrm17AAG.csv
 
+#paste0(mybaseURL,'2013-10-15cFP-ErlChxFskTrm17AAG.csv')
+#read.csv(textConnection(getURL(paste0(mybaseURL,'2013-10-15cFP-ErlChxFskTrm17AAG.csv'))))
 #read.csv(textConnection(getURL(paste0(mybaseURL,'BP_SKMEL5.csv'))))
-#https://rawgit.com/frickp/cFPpaper-Rcode/blob/master/Data%20used%20for%20figures%20(pulled%20by%20R)/BP_SKMEL5.csv
 
 ##################################################################
 # Pull all data
@@ -70,7 +67,7 @@ CHX.mean	<-	cbind(
 colnames(CHX.mean)	<-	c("Time.day","nl2","sd")
 
 dev.new(width=3,height=4)
-fn1	<-	paste(write.dir,"/Fig 3 mean dynamics + SD.pdf",sep="")
+#fn1	<-	paste(write.dir,"/Fig 3 mean dynamics + SD.pdf",sep="")
 #pdf(fn1,width=3, height=4)
 par(font.lab=2)
 plot(CHX.mean$Time.day,CHX.mean$nl2,type='o',ylim=c(-0.2,2.2),xlab="Time in drug (d)",ylab="Population doublings",lwd=2,pch=26)
@@ -98,7 +95,7 @@ lo	<-	"B04_J_E0_CHX500_TRM0_X17A0_Plate1"
 hi	<-	"B03_A_E0_CHX500_TRM0_X17A0_Plate1"
 down<-	"B05_H_E0_CHX500_TRM0_X17A0_Plate1"
 dev.new(width=3,height=4)	
-fn2	<-	paste(write.dir,"/Fig 3 boxplot traces.pdf",sep="")
+#fn2	<-	paste(write.dir,"/Fig 3 boxplot traces.pdf",sep="")
 #pdf(fn2,width=3, height=4)
 par(cex.lab=1.2)	
 boxplot(nl2 ~ Time.day, data=D.CHX500, notch=TRUE, xlab="Time in drug (d)", ylab="Colony doublings", 
@@ -112,7 +109,7 @@ lines(1:11, subset(cfp,id==down)$nl2[1:11], col='green', lwd=2)
 ##########################################################################################
 
 dev.new(width=3, height=4)
-fn.boxplot	<-	paste(write.dir,"/Fig 3 72h norm colony dynamics boxplots.pdf",sep="")
+#fn.boxplot	<-	paste(write.dir,"/Fig 3 72h norm colony dynamics boxplots.pdf",sep="")
 #pdf(fn.boxplot,width=3, height=4)
 par(font.lab=2)
 boxplot(nl2.72 ~ Time.day, data=D.CHX500[D.CHX500$Time.day>2,], notch=TRUE, xlab="Time in drug(d)", ylab="Colony Doublings", 
@@ -135,7 +132,7 @@ lines(1:4, mean.ctrl$nl2,col='black',lty=2,lwd=2)
 ##########################################################################################
 r	<-	2 #registration error of boxplots		
 dev.new(width=3,height=4)
-fn3	<-	paste(write.dir,"/Fig 3 72h norm linear model colony dynamics.pdf",sep="")
+#fn3	<-	paste(write.dir,"/Fig 3 72h norm linear model colony dynamics.pdf",sep="")
 #pdf(fn3,width=3, height=4)
 par(font.lab=2)
 plot(	4:11-r, 4:11-r, type='n', 
@@ -172,7 +169,7 @@ segments(3-r,0,6-r, 3*lm.DMSO,col='black',lty=2,lwd=2)
 ##########################################################################################
 
 dev.new(width=3,height=4)
-fn4	<-	paste(write.dir,"/Fig 4 R2 linear model coefficients.pdf",sep="")
+#fn4	<-	paste(write.dir,"/Fig 4 R2 linear model coefficients.pdf",sep="")
 #pdf(fn4,width=3, height=4)
 par(font.lab=2)
 R2	<-	append(D.slope$R2,DCHX.slope$R2)
@@ -195,7 +192,7 @@ for (i in 1:nrow(pred)) #Combine DIP rate and 10d data into one matrix
 }
 
 dev.new(width=3,height=4)
-fn5	<-	paste(write.dir,"/Fig 4 outcome correlation.pdf",sep="")
+#fn5	<-	paste(write.dir,"/Fig 4 outcome correlation.pdf",sep="")
 #pdf(fn5,width=3, height=4)
 par(cex=1.1, font.lab=2)
 plot(pred$Slope,pred$new.nl2,xlab="Prolif rate",ylab="Fold change colony size",
@@ -206,7 +203,7 @@ text(x=.05,y=2.3,paste("R = ",as.numeric(round(cor.test(pred$new.nl2,pred$Slope)
 #dev.off()
 
 dev.new(width=3,height=4)
-fn.10dh	<-	paste(write.dir,"/Fig 3 10d hist 500CHX.pdf",sep="")
+#fn.10dh	<-	paste(write.dir,"/Fig 3 10d hist 500CHX.pdf",sep="")
 #pdf(fn.10dh,width=3, height=4)
 par(font.lab=2)
 plot.HG.hist(ten.day$nl2,x.limit=c(-1,3),hist.col=alpha('black',0.3),new.plot=T,my.bin=0.26,y.limit=c(0,1))
@@ -217,7 +214,7 @@ plot.HG.hist(ten.day$nl2,x.limit=c(-1,3),hist.col=alpha('black',0.3),new.plot=T,
 
 
 dev.new(width=3,height=4)
-fn.CHXrates	<-	paste(write.dir,"/Fig 3 CHX rates hist.pdf",sep="")
+#fn.CHXrates	<-	paste(write.dir,"/Fig 3 CHX rates hist.pdf",sep="")
 #pdf(fn.CHXrates,width=3, height=4)
 plot.HG.hist(d=DCHX.slope$Slope,new.plot=T,x.limit=c(-0.15,0.3),
 	hist.col=alpha('black',0.3),y.limit=c(0,10),my.bin=0.025,skewness=T)
@@ -227,7 +224,7 @@ arrows(lm.down,10,lm.down,5,length=0.15,lwd=2,col='green')
 #dev.off()
 
 dev.new(width=4,height=4)
-fn.hist2	<-	paste(write.dir,"/Fig 3 hist (DMSO).pdf",sep="")
+#fn.hist2	<-	paste(write.dir,"/Fig 3 hist (DMSO).pdf",sep="")
 #pdf(fn.hist2,width=4, height=4)
 plot.HG.hist(d=D.slope$Slope,new.plot=T,x.limit=c(0.35,1.25),
 	hist.col=alpha('black',0.3),y.limit=c(0,6),my.bin=0.03)
