@@ -34,6 +34,6 @@ for(i in group)	{
         }		
 cfp$nl2.72		<-	nl2
 
-rm(list=c('nl2','temp','group','i','read.dir'))
+rm(list=c('nl2','temp','group','i'))
 
 

@@ -23,11 +23,14 @@ importPackages('gplots') 	#for error bars: plotCI
 
 #baseURL = c("https://raw.github.com/--username--/--repo-name--/master/")
 mybaseURL='https://raw.githubusercontent.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/'
+
 source(textConnection(getURL(paste0(mybaseURL,'cFP-norm72h.r'))))
 source(textConnection(getURL(paste0(mybaseURL,'cFP-comboEstimateSlopes.r'))))
 source(textConnection(getURL(paste0(mybaseURL,'HGmodel.r'))))
 
 read.csv(textConnection(getURL(paste0(mybaseURL,'2013-10-15cFP-ErlChxFskTrm17AAG.csv'))))
+paste0(mybaseURL,'2013-10-15cFP-ErlChxFskTrm17AAG.csv')
+read.csv(textConnection(getURL(paste0(mybaseURL,'BP_SKMEL5.csv'))))
 2013-10-15cFP-ErlChxFskTrm17AAG.csv
 
 #read.csv(textConnection(getURL(paste0(mybaseURL,'BP_SKMEL5.csv'))))
