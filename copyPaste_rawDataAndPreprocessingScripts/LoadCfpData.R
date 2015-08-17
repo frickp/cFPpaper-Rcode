@@ -48,6 +48,7 @@ norm		<-	numeric()
 for (i in ID.list)
 	norm	<-	append(norm, 	subset(cfp.data, ID == i)$log2 - subset(cfp.data, ID == i)$log2[1])
 	cfp.data$norm	<-	norm
+print('Data normalization complete')
 
 # Find All Slopes
 print('Estimating best fit linear models for cell lineages')
@@ -58,5 +59,4 @@ cfp.rates <- aggregate(cfp.data$log2, by=list(cfp.data$ID),
                 coef(lm(x[time] ~ time))[2] / 24						#estimated slope						 
 			}			 
 		)
-print('Data normalization complete')
 colnames(cfp.rates) <- c('ID','rates')
