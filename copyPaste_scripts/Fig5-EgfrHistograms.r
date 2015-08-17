@@ -1,10 +1,13 @@
-source('find-cFP-Folder.r')
-setwd(read.dir)
+importPackages('sn')
+importPackages('scales')
 
-library(sn)
-source('HG model.r')
-IF	<-	read.csv('2011-10-27 IF EGFR single-cell intensity.csv')
-library(scales) #for alpha blending
+#source('HGmodel.r')
+source(textConnection(getURL(paste0(mybaseURL,'HGmodel.r'))))
+
+#read.csv(textConnection(getURL(paste0(mybaseURL,'2011-10-27-IF-EgfrSingleCellIntensity.csv'))))
+
+IF	<-	read.csv(textConnection(getURL(paste0(mybaseURL,'2011-10-27-IF-EgfrSingleCellIntensity.csv'))))
+importPackages('scales') #for alpha blending
 
 IF.hist	<-	paste(write.dir,"/Fig 5 EGFR IF histograms.pdf",sep="")
 dev.new(width=3,height=4)

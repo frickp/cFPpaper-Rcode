@@ -1,9 +1,8 @@
 
-library(gplots)
-source('find-cFP-Folder.r')
-setwd(read.dir)
+importPackages('gplots')
 
-PC9.3day <- read.csv('PC9 sublines full 72hour data.csv',row.names=NULL);
+PC9.3day	<-	read.csv(textConnection(getURL(paste0(mybaseURL,'PC9-SublinesFull72HourData.csv'))),row.names=NULL)
+
 ###creates a new column with the log2 data
 PC9.3day$log2 <- log2(PC9.3day$Cell.count);
 ###Creates unique ID for each well
