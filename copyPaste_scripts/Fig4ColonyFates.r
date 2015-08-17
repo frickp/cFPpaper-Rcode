@@ -2,7 +2,9 @@ mybaseURL='https://raw.githubusercontent.com/frickp/cFPpaper-Rcode/master/copyPa
 
 d		<-	read.csv(textConnection(paste0(mybaseURL,'PC9_DMSO_FUCCI_Col.csv')))
 
-textConnection(paste0(mybaseURL,'PC9_DMSO_FUCCI_Col.csv'))
+read.csv(textConnection('https://raw.githubusercontent.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/PC9_DMSO_FUCCI_Col.csv'))
+#read.csv(textConnection(getURL(paste0(mybaseURL,'2013-10-15cFP-ErlChxFskTrm17AAG.csv'))))
+#textConnection(paste0(mybaseURL,'PC9_DMSO_FUCCI_Col.csv'))
 
 basefile	<-	'~/Dropbox/Shared Vito/cFP paper/Figures/'#Code to automatically add PC compatibility
 basefile2	<-	gsub('\\\\','/',path.expand(basefile))
