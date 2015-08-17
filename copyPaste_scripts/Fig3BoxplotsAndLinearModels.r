@@ -1,3 +1,7 @@
+# Helpful documentation for reading data off GitHub in R
+# http://stackoverflow.com/questions/11913190/r-code-on-google-docs
+
+# Documentation I need to look at for gettinf RCurl to work on PC
 #http://stackoverflow.com/questions/17411313/ssl-verification-causes-rcurl-and-httr-to-break-on-a-website-that-should-be-le
 
 importPackages = function(pkgName)
