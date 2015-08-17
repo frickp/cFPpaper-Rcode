@@ -1,3 +1,5 @@
+
+library(gplots)
 source('find-cFP-Folder.r')
 setwd(read.dir)
 
@@ -46,18 +48,18 @@ for (j in 1:7)
 	co=0
 	for (i in 2:len) #code to find where time increases incorrectly
 		if (curr.ds$Time_h[i] > (curr.ds$Time_h[i-1] + 1))
-			{#print(i)
-			co=co+1}
+			{
+			co=co+1
+			}
 			print(co)
 	for (i in 2:(len+co)) #code to scan data to find where time increases incorrectly
 		if (curr.ds$Time_h[i] > (curr.ds$Time_h[i-1] + 1))
-			#print(i)
 			{
 			curr.ds[len+1+s,]<-rep(0,10)
-			curr.ds[len+1+s,c(4,5,6,8,9,10)] <- rep(0) #extend data frame by one to allow cut and paste
-			curr.ds[len+1+s,c(1,2,3,7)] <- curr.ds[len+s,c(1,2,3,7)] #extend data frame by one to allow cut and paste
-			row.names(curr.ds)[len+1+s] <- as.character(as.numeric(row.names(curr.ds[len +s,]))+1) #code to advance row names
-			curr.ds[(i+1):(len+1+s),] <- curr.ds[(i):(len+s),] #code to shift all data ahead 1 hour
+			curr.ds[len+1+s,c(4,5,6,8,9,10)] <- rep(0) 					#extend data frame by one to allow cut and paste
+			curr.ds[len+1+s,c(1,2,3,7)] <- curr.ds[len+s,c(1,2,3,7)] 	#extend data frame by one to allow cut and paste
+			row.names(curr.ds)[len+1+s] <- as.character(as.numeric(row.names(curr.ds[len +s,]))+1) 		#code to advance row names
+			curr.ds[(i+1):(len+1+s),] <- curr.ds[(i):(len+s),] 			#code to shift all data ahead 1 hour
 			curr.ds[i,c(4,5,6,8,10)] <-rep(999)
 			s=s+1
 			}
@@ -105,8 +107,8 @@ for (i in 1:length(DS.rates))
 }
 
 
-library(gplots)
-fn1	=	paste(write.dir,"/Fig 4 DMSO subline rates.pdf",sep="")
+
+#fn1	=	paste(write.dir,"/Fig 4 DMSO subline rates.pdf",sep="")
 dev.new(width=2.5,height=4)
 #pdf(file=fn1, width=2.5, height=4)
 par(font.lab=2)

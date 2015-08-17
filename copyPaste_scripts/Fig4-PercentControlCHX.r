@@ -1,19 +1,9 @@
-
-
 importPackages('RCurl')
 importPackages('gplots')
 
-mybaseURL='https://cdn.rawgit.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/'
+mybaseURL = 'https://cdn.rawgit.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/'
 
-#read.dir<-	paste0(base.dir,'Data used for figures (pulled by R)/')
-d.WW	<-	read.csv(paste0(read.dir,'CHX-WholeWellProcessing.csv'))
-
-read.csv(textConnection(getURL(paste0(mybaseURL,'cFPColonyTracking.csv'))))
-
-read.csv(textConnection(getURL(paste0(mybaseURL,'CHX-WholeWellProcessing.csv'))))
-
-dcga <- read.csv(textConnection(getURL(paste0(mybaseURL,'cFPColonyTracking.csv'))))
-
+d.WW	<-	read.csv(textConnection(getURL(paste0(mybaseURL,'CHX-WholeWellProcessing.csv'))))
 
 s		<-	1.075	#Scaling factor to start at 100%
 mean.DMSO	<-	numeric()
@@ -26,7 +16,7 @@ for (i in 0:10)
 	x		<-	(subset(d.WW,CHX==500 & Time.day==i)$Count/s)/mean.DMSO[i+1]*100
 	d.CHX	<-	mean(x)
 	perc	<-	append(perc,d.CHX)
-	err		<-	append(err,sd(x)/sqrt(length(x)))	#This should be corrected if used; smaller error for smaller values is not right.
+	err		<-	append(err,sd(x)/sqrt(length(x)))
 }
 
 dev.new(width=3,height=4)
