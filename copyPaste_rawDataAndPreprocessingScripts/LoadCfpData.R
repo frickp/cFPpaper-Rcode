@@ -1,4 +1,5 @@
-cfp.data	<- 	read.csv('cFP single-agent combos.csv')
+cfp.data	<-	read.csv(textConnection(getURL(paste0(mybaseURL,'cFP-SingleAgentConcDep.csv'))))
+
 ### Code that scans the data frame, finds time points where all the cells disappear, 17Ad replace it
 ### with .999, so that the data can be displayed in log scale, yet easily found. 
 
