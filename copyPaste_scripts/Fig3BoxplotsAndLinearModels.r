@@ -22,7 +22,7 @@ importPackages('gplots') 	#for error bars: plotCI
 
 
 #baseURL = c("https://raw.github.com/--username--/--repo-name--/master/")
-mybaseURL='https://raw.githubusercontent.com/frickp/cFPpaper-Rcode/master/Data%20used%20for%20figures%20(pulled%20by%20R)/'
+mybaseURL='https://raw.githubusercontent.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/'
 source(textConnection(getURL(paste0(mybaseURL,'ColonyAssayData.R'))))
 
 read.csv(textConnection(getURL(paste0(mybaseURL,'BP_SKMEL5.csv'))))
