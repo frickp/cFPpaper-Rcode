@@ -3,8 +3,16 @@
 importPackages('RCurl')
 importPackages('gplots')
 
-read.dir<-	paste0(base.dir,'Data used for figures (pulled by R)/')
+mybaseURL='https://cdn.rawgit.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/'
+
+#read.dir<-	paste0(base.dir,'Data used for figures (pulled by R)/')
 d.WW	<-	read.csv(paste0(read.dir,'CHX-WholeWellProcessing.csv'))
+
+read.csv(textConnection(getURL(paste0(mybaseURL,'cFPColonyTracking.csv'))))
+
+read.csv(textConnection(getURL(paste0(mybaseURL,'CHX-WholeWellProcessing.csv'))))
+
+dcga <- read.csv(textConnection(getURL(paste0(mybaseURL,'cFPColonyTracking.csv'))))
 
 
 s		<-	1.075	#Scaling factor to start at 100%
