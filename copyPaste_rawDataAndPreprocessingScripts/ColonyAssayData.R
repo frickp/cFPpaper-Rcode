@@ -1,10 +1,6 @@
-#dcga       <- read.csv('cFPColonyTracking.csv')
-
 dcga <- read.csv(textConnection(getURL(paste0(mybaseURL,'cFPColonyTracking.csv'))))
 
-read.csv(textConnection(getURL(paste0(mybaseURL,'BP_SKMEL5.csv'))))
-
-# Get rid of DMSO past day 3
+# Get rid of DMSO past day 3 to avoid cell density-dependent experimental bias
 dcga    <- subset(dcga, !(Condition == 'DMSO' & Time_Day > 3) )
 
 # Uniquely ID each set of data 
