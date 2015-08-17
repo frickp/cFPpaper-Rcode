@@ -42,7 +42,7 @@ ID.list	<-	as.character(unique(cfp.data$ID))
 
 
 ###Normalize data to start at 0 from a log-scale
-print('Processing and normalizing raw data')
+print('Processing and normalizing raw data...')
 cfp.data$norm	<-	rep(0)
 norm		<-	numeric()
 for (i in ID.list)
@@ -51,7 +51,7 @@ for (i in ID.list)
 print('Data normalization complete')
 
 # Find All Slopes
-print('Estimating best fit linear models for cell lineages')
+print('Estimating best fit linear models for cell lineages...')
 cfp.rates <- aggregate(cfp.data$log2, by=list(cfp.data$ID),
 			FUN=function(x)
             {
