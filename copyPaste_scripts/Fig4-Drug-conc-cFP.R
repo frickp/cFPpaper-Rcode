@@ -5,6 +5,8 @@ mybaseURL='https://raw.githubusercontent.com/frickp/cFPpaper-Rcode/master/copyPa
 source(textConnection(getURL(paste0(mybaseURL,'LoadCfpData.R'))))
 source(textConnection(getURL(paste0(mybaseURL,'HGmodel.r'))))
 
+#https://raw.githubusercontent.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/LoadCfpData.R
+
 
 #source('LoadCfpData.R')
 #source('HGmodel.R')
