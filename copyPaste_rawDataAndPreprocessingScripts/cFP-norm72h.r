@@ -1,6 +1,9 @@
 
 #cfp       <- read.csv('2013-10-15 cFP E + CHX, FSK, TRM, 17A.csv')
-cfp       <- read.csv('2013-10-15 cFP E + CHX, FSK, TRM, 17A v2.csv')
+#cfp       <- read.csv('2013-10-15 cFP E + CHX, FSK, TRM, 17A v2.csv')
+
+cfp	<-	read.csv(textConnection(getURL(paste0(mybaseURL,'2013-10-15cFP-ErlChxFskTrm17AAG.csv'))))
+
 # Uniquely ID each set of data 
 cfp$id <- paste(cfp$Well,cfp$Colony,paste("E",cfp$Erl,sep=""),paste("CHX",cfp$CHX,sep=""),paste("TRM",cfp$TRM,sep=""),paste("X17A",cfp$X17A,sep=""),paste("Plate",cfp$Plate,sep=""), sep="_")    
 cfp$l2	<-	log2(cfp$Cell.count)
