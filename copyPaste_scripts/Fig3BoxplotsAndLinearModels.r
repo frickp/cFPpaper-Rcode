@@ -23,28 +23,24 @@ importPackages('gplots') 	#for error bars: plotCI
 
 #baseURL = c("https://raw.github.com/--username--/--repo-name--/master/")
 mybaseURL='https://raw.githubusercontent.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/'
-source(textConnection(getURL(paste0(mybaseURL,'ColonyAssayData.R'))))
+source(textConnection(getURL(paste0(mybaseURL,'cFP-norm72h.r'))))
+source(textConnection(getURL(paste0(mybaseURL,'cFP-comboEstimateSlopes.r'))))
+source(textConnection(getURL(paste0(mybaseURL,'HGmodel.r'))))
 
-read.csv(textConnection(getURL(paste0(mybaseURL,'BP_SKMEL5.csv'))))
+read.csv(textConnection(getURL(paste0(mybaseURL,'2013-10-15cFP-ErlChxFskTrm17AAG.csv'))))
+2013-10-15cFP-ErlChxFskTrm17AAG.csv
 
-https://rawgit.com/frickp/cFPpaper-Rcode/blob/master/Data%20used%20for%20figures%20(pulled%20by%20R)/BP_SKMEL5.csv
-
-
-
-
-source('find-cFP-Folder.r')
-setwd(read.dir)
+#read.csv(textConnection(getURL(paste0(mybaseURL,'BP_SKMEL5.csv'))))
+#https://rawgit.com/frickp/cFPpaper-Rcode/blob/master/Data%20used%20for%20figures%20(pulled%20by%20R)/BP_SKMEL5.csv
 
 ##################################################################
 # Pull all data
 ##################################################################
 
-source('cFP norm (72h).R')
-source('cFP combo estimate-slopes.r')
-source('HG model.r')
-library(sn)		#skew-normal for histogram fits
-library(scales) #for alpha blending
-library(gplots) #for error bars: plotCI
+#source('cFP norm (72h).R')
+#source('cFP combo estimate-slopes.r')
+#source('HG model.r')
+
 
 ##########################################################################################
 #Subset the data
