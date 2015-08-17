@@ -11,7 +11,7 @@ importPackages = function(pkgName)
 	{
 		print(paste0(pkgName,': ','found'))
 	}
-	#If not found, ask user permission to install, then install and load package
+	#If package is not found, ask user permission to install, then install and load
 	else {
 		print(paste(pkgName,'not found'))
 		if(readline("Type T to install package or anything else to abort: ")=='T'){
