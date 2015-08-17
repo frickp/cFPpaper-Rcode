@@ -1,8 +1,10 @@
-source('find-cFP-Folder.r')
-library(gplots)
+
+
+importPackages('RCurl')
+importPackages('gplots')
 
 read.dir<-	paste0(base.dir,'Data used for figures (pulled by R)/')
-d.WW	<-	read.csv(paste0(read.dir,'CHX whole well processing.csv'))
+d.WW	<-	read.csv(paste0(read.dir,'CHX-WholeWellProcessing.csv'))
 
 
 s		<-	1.075	#Scaling factor to start at 100%
