@@ -2,15 +2,20 @@
 
 importPackages = function(pkgName)
 {
+	#First, logical test to see if the package is installed
 	if(eval(parse(text=paste0('library(',pkgName,',logical.return=T,quietly=T)'))))
 	{
 		print(paste0(pkgName,': ','found'))
-	} else {
+	}
+	#If not found, ask user permission to install, then install and load package
+	else {
 		print(paste(pkgName,'not found'))
-		if(readline("Type T to install package or anything else to abort")=='T'){
+		if(readline("Type T to install package or anything else to abort: ")=='T'){
 			print(paste('not found',pkgName))
-			install.packages(pkgName)
+			install.packages(pkgName)							#install the package
+			eval(parse(text=paste0('library(',pkgName,')')))	#load the package
 			}
+		#Abort if user permission is not valid
 		else {
 			print('Package install aborted. Type T to install')
 		}
