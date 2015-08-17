@@ -1,3 +1,4 @@
+# Load data
 dcga <- read.csv(textConnection(getURL(paste0(mybaseURL,'cFPColonyTracking.csv'))))
 
 # Get rid of DMSO past day 3 to avoid cell density-dependent experimental bias
@@ -22,6 +23,7 @@ for(i in group)	{
         
 dcga$l2		<-	nl2        
 
+# Clean up directory
 rm(list=c('nl2','group','temp'))
 
 
