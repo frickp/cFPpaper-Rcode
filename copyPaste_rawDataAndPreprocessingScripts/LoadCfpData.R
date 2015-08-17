@@ -42,7 +42,7 @@ ID.list	<-	as.character(unique(cfp.data$ID))
 
 
 ###Normalize data to start at 0 from a log-scale
-print('data processing/normaliation')
+print('Processing and normalizing raw data')
 cfp.data$norm	<-	rep(0)
 norm		<-	numeric()
 for (i in ID.list)
@@ -58,4 +58,5 @@ cfp.rates <- aggregate(cfp.data$log2, by=list(cfp.data$ID),
                 coef(lm(x[time] ~ time))[2] / 24						#estimated slope						 
 			}			 
 		)
+print('Data normalization complete')
 colnames(cfp.rates) <- c('ID','rates')
