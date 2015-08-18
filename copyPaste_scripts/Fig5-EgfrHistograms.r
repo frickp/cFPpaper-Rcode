@@ -1,5 +1,25 @@
+
+
+importPackages = function(pkgName)
+{
+	#First, logical test to see if the package is installed
+	if(suppressWarnings(eval(parse(text=paste0('library(',pkgName,',logical.return=T,quietly=T)')))))
+	{
+		print(paste0(pkgName,': ','found'))
+	}
+	#If package is not found, notify user to install requisite packages before re-running
+	else {
+		writeLines(paste0('Package "',pkgName,'" is required, but not found.\nPlease install ',
+			pkgName,' package by running the following command in R:\n\n\tinstall.packages("',
+			pkgName,'")\n\nThen re-run this script\n'))
+		stop('Required packages not installed. See above line for installation instructions')
+	}
+}
+
 importPackages('sn')
 importPackages('scales')
+importPackages('fracprolif')
+
 
 #source('HGmodel.r')
 source(textConnection(getURL(paste0(mybaseURL,'HGmodel.r'))))
@@ -9,7 +29,7 @@ source(textConnection(getURL(paste0(mybaseURL,'HGmodel.r'))))
 IF	<-	read.csv(textConnection(getURL(paste0(mybaseURL,'2011-10-27-IF-EgfrSingleCellIntensity.csv'))))
 importPackages('scales') #for alpha blending
 
-IF.hist	<-	paste(write.dir,"/Fig 5 EGFR IF histograms.pdf",sep="")
+#IF.hist	<-	paste(write.dir,"/Fig 5 EGFR IF histograms.pdf",sep="")
 dev.new(width=3,height=4)
 #pdf(file=IF.hist, width=3,height=4)
 par(font.lab=2)

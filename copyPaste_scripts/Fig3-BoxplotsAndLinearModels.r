@@ -40,11 +40,6 @@ source(textConnection(getURL(paste0(mybaseURL,'cFP-norm72h.r'))))
 source(textConnection(getURL(paste0(mybaseURL,'cFP-comboEstimateSlopes.r'))))
 source(textConnection(getURL(paste0(mybaseURL,'HGmodel.r'))))
 
-
-#paste0(mybaseURL,'2013-10-15cFP-ErlChxFskTrm17AAG.csv')
-#read.csv(textConnection(getURL(paste0(mybaseURL,'2013-10-15cFP-ErlChxFskTrm17AAG.csv'))))
-#read.csv(textConnection(getURL(paste0(mybaseURL,'BP_SKMEL5.csv'))))
-
 ##################################################################
 # Pull all data
 ##################################################################
