@@ -1,52 +1,25 @@
 # Helpful documentation for reading data off GitHub in R
 # http://stackoverflow.com/questions/11913190/r-code-on-google-docs
 
-# Documentation I need to look at for gettinf RCurl to work on PC
+# Documentation I need to look at for getting RCurl to work on PC
 #http://stackoverflow.com/questions/17411313/ssl-verification-causes-rcurl-and-httr-to-break-on-a-website-that-should-be-le
 
-importPackages = function(pkgName)
-{
-	#First, logical test to see if the package is installed
-	if(eval(parse(text=paste0('library(',pkgName,',logical.return=T,quietly=T)'))))
-	{
-		print(paste0(pkgName,': ','found'))
-	}
-	#If package is not found, ask user permission to install, then install and load
-	else {
-		print(paste(pkgName,'not found'))
-		if(readline("Type T to install package or anything else to abort: ")=='T'){
-			print(paste('not found',pkgName))
-			install.packages(pkgName)							#install the package
-			eval(parse(text=paste0('library(',pkgName,')')))	#load the package
-			}
-		#Abort if user permission is not valid
-		else {
-			print('Package install aborted. Type T to install')
-		}
-	}
-}
-
-importPackages('RCurl')		#for pulling raw data from Github
-importPackages('sn')		#skew-normal for histogram fits
-importPackages('scales') 	#for alpha blending
-importPackages('gplots') 	#for error bars: plotCI
+getLib('RCurl'); getLib('RCurl')	#for pulling raw data from Github
+getLib('sn'); getLib('sn')			#skew-normal for histogram fits
+getLib('scales'); getLib('scales')	#for alpha blending
+getLib('gplots'); getLib('gplots')	#for error bars: plotCI
 
 
-#baseURL = c("https://raw.github.com/--username--/--repo-name--/master/")
-#mybaseURL = 'https://raw.githubusercontent.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/'
+##################################################################
+# Load data and processing functions
+##################################################################
+
+# Point to the github project page
 mybaseURL = 'https://cdn.rawgit.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/'
+
 source(textConnection(getURL(paste0(mybaseURL,'cFP-norm72h.r'))))
-#source(textConnection(getURL(paste0(mybaseURL,'cFP-norm72h.r'),cainfo=pemFile)))
 source(textConnection(getURL(paste0(mybaseURL,'cFP-comboEstimateSlopes.r'))))
 source(textConnection(getURL(paste0(mybaseURL,'HGmodel.r'))))
-
-##################################################################
-# Pull all data
-##################################################################
-
-#source('cFP norm (72h).R')
-#source('cFP combo estimate-slopes.r')
-#source('HG model.r')
 
 
 ##########################################################################################

@@ -1,19 +1,22 @@
-importPackages('RCurl')
+#Load dependencies
+getLib('RCurl'); getLib('RCurl')
+getLib('sn'); getLib('sn')
+getLib('scales'); getLib('scales')
+
+#Point to GitHub project page
 mybaseURL='https://raw.githubusercontent.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/'
 
+##########################################################################################
+# Load data and analysis scripts
+##########################################################################################
 
 source(textConnection(getURL(paste0(mybaseURL,'LoadCfpData.R'))))
 source(textConnection(getURL(paste0(mybaseURL,'HGmodel.r'))))
 
-#https://raw.githubusercontent.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/LoadCfpData.R
+##########################################################################################
+# Populate new vectors of DIP rates	
+##########################################################################################
 
-
-#source('LoadCfpData.R')
-#source('HGmodel.R')
-library(sn)
-library(scales)
-
-#Populate new vectors of DIP rates	
 D.cfp	<-	subset(cfp.rates, grepl('D_only',ID) & grepl('PC9',ID))$rates
 
 TRM	<-	c('D.TRM500.cfp','D.TRM50.cfp','D.TRM5.cfp')
@@ -75,9 +78,6 @@ compare.hist(ref='D',combo=c('SB10','SB1'),my.cols=c(alpha('red',c(1,0.4))),
 compare.hist(ref='D',combo=c('An1','An0.1'),my.cols=c(alpha('red',c(1,0.4))),
 	plot.title='An',my.xlim=c(-0.05,0.05),my.ylim=c(0,140),my.skew=T)
 #dev.off()
-
-#compare.hist(ref='D',combo=c('FSK10','FSK1','FSK0.1'),my.cols=c('green','red','blue'),
-#	my.title='FSK',my.xlim=c(-0.05,0.05),my.ylim=c(0,140))
 
 
 dev.new(width=8,height=3)

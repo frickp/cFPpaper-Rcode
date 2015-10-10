@@ -1,6 +1,8 @@
 
-importPackages('gplots')
+#Load dependencies
+getLib('gplots'); getLib('gplots')
 
+#Load the data
 PC9.3day	<-	read.csv(textConnection(getURL(paste0(mybaseURL,'PC9-SublinesFull72HourData.csv'))),row.names=NULL)
 
 ###creates a new column with the log2 data

@@ -1,6 +1,6 @@
+getLib('RCurl'); getLib('RCurl')	#for pulling raw data from Github
+
 mybaseURL='https://raw.githubusercontent.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/'
-
-
 
 d		<-	read.csv(textConnection(getURL(paste0(mybaseURL,'PC9_DMSO_FUCCI_Col.csv'))))
 

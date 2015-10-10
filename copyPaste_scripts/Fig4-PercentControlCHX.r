@@ -1,5 +1,5 @@
-importPackages('RCurl')
-importPackages('gplots')
+getLib('RCurl'); getLib('RCurl')
+getLib('gplots'); getLib('gplots')
 
 mybaseURL = 'https://cdn.rawgit.com/frickp/cFPpaper-Rcode/master/copyPaste_rawDataAndPreprocessingScripts/'
 

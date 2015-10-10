@@ -1,33 +1,21 @@
+# Load dependencies
+getLib('sn'); getLib('sn')
+getLib('scales'); getLib('scales')
+getLib('fracprolif'); getLib('fracprolif')
 
+##################################################################
+# Load data and processing functions
+##################################################################
 
-importPackages = function(pkgName)
-{
-	#First, logical test to see if the package is installed
-	if(suppressWarnings(eval(parse(text=paste0('library(',pkgName,',logical.return=T,quietly=T)')))))
-	{
-		print(paste0(pkgName,': ','found'))
-	}
-	#If package is not found, notify user to install requisite packages before re-running
-	else {
-		writeLines(paste0('Package "',pkgName,'" is required, but not found.\nPlease install ',
-			pkgName,' package by running the following command in R:\n\n\tinstall.packages("',
-			pkgName,'")\n\nThen re-run this script\n'))
-		stop('Required packages not installed. See above line for installation instructions')
-	}
-}
-
-importPackages('sn')
-importPackages('scales')
-importPackages('fracprolif')
-
-
-#source('HGmodel.r')
+# load model fitting function
 source(textConnection(getURL(paste0(mybaseURL,'HGmodel.r'))))
-
-#read.csv(textConnection(getURL(paste0(mybaseURL,'2011-10-27-IF-EgfrSingleCellIntensity.csv'))))
-
+# load immunofluorescence data
 IF	<-	read.csv(textConnection(getURL(paste0(mybaseURL,'2011-10-27-IF-EgfrSingleCellIntensity.csv'))))
 importPackages('scales') #for alpha blending
+
+##################################################################
+# Process and plot the data
+##################################################################
 
 #IF.hist	<-	paste(write.dir,"/Fig 5 EGFR IF histograms.pdf",sep="")
 dev.new(width=3,height=4)
@@ -38,7 +26,17 @@ plot.HG.hist(IF$DS3,y.limit=c(0,2e-3),hist.col=alpha('red',0.5),x.limit=c(500,40
 plot.HG.hist(IF$DS5[!is.na(IF$DS5)],hist.col=alpha('blue',0.5),x.limit=c(500,4000),
 	my.bin=100,line.col='blue')
 legend("topright",c("DS3","DS5"),col=c(alpha('red',0.5),alpha('blue',0.5)),pch=15,bty="n")
+title('Skew-normal fits')
 #dev.off()
+
+dev.new(width=3,height=4)
+#pdf(file=IF.hist, width=3,height=4)
+par(font.lab=2)
+plot.HG.hist(IF$DS3,y.limit=c(0,2e-3),hist.col=alpha('red',0.5),x.limit=c(500,4000),
+	new.plot=T,my.bin=100,line.col=alpha('red',0))
+plot.HG.hist(IF$DS5[!is.na(IF$DS5)],hist.col=alpha('blue',0.5),x.limit=c(500,4000),
+	my.bin=100,line.col=alpha('blue',0))
+title('EMG distribution fits')
 
 #Compute stats for DS3 using exponentially-modified gaussian
 library(fracprolif)
