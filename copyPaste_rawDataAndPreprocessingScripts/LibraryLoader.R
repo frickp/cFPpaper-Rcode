@@ -1,7 +1,6 @@
 # Function to load a package, or install it if it is not found.
 
-# Example usage:
-#	getLib("myLibrary"); getLib("myLibrary")
+# Example usage:	getLib("myLibrary"); getLib("myLibrary")
 # Note, using twice consecutively allows the package to be simultaneously installed and loaded
 
 getLib = function(myLib)
